@@ -18,7 +18,7 @@
             {{filter.group || 'Select Group'}} <span class="caret"></span>
           </button>
           <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-            <li ng-repeat="choice in items" ng-click="selectFilter(choice)">
+            <li ng-repeat="choice in items" ng-click="selectGroup(choice)">
               <a href>{{choice}}</a>
             </li>
 

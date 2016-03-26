@@ -39,7 +39,23 @@
       $scope.sortedcontacts = _.groupBy(contacts, function(item) {return item.firstName[0]; });
     }, true);
 
+    function filterContacts (filter) {
+      if (filter && filter.name) {
+        var pattern = new RegExp(filter.name, 'i');
+      } else {
+        var pattern = /\.*/
+      }
 
+      var contacts =  _.filter($scope.contacts, function(contact) {
+       if((pattern.test(contact.firstName) || pattern.test(contact.lastName)) &&
+         filter.group ? contact.group === filter.group : true) {
+        return true;
+       }
+       return false;
+    });
+      console.log(contacts);
+      $scope.sortedcontacts = _.groupBy(contacts, function(item) {return item.firstName[0]; });
+    }
     function openModalAddNewContact() {
 
       var modalInstance = $uibModal.open({
@@ -117,7 +133,7 @@
       });
 
       modalInstance.result.then(function (filter) {
-
+        filterContacts(filter);
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
