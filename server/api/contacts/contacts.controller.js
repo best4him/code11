@@ -10,25 +10,25 @@
 'use strict';
 
 var _ = require('lodash');
-var Link = require('./link.model.js');
-var UrlFrontier = require('../../components/crawler/url-frontier');
+var Contacts = require('./contacts.model.js');
+
 // Get list of things
 exports.index = function(req, res) {
-  getLinks(req.user._id, function (err, links) {
+  getContacts(req.user._id, function (err, links) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(links);
   })
 };
-exports.getLinks = getLinks;
-function getLinks (userId, callback) {
-  Link.find({'userId': userId}, function (err, links) {
+exports.getContacts = getContacts;
+function getContacts (userId, callback) {
+  Contacts.find({'userId': userId}, function (err, links) {
     if(err) { return callback(err, null); }
     return callback(null, links);
   });
 }
 // Get a single thing
 exports.show = function(req, res) {
-  Link.findById(req.params.id, function (err, link) {
+  Contacts.findById(req.params.id, function (err, link) {
     if(err) { return handleError(res, err); }
     if(!link) { return res.status(404).send('Not Found'); }
     return res.json(link);
@@ -38,7 +38,7 @@ exports.show = function(req, res) {
 // Creates a new thing in the DB.
 exports.create = function(req, res) {
   req.body.userId = req.user._id;
-  Link.create(req.body, function(err, link) {
+  Contacts.create(req.body, function(err, link) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(link);
   });
@@ -47,7 +47,7 @@ exports.create = function(req, res) {
 // Updates an existing thing in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  Link.findById(req.params.id, function (err, link) {
+  Contacts.findById(req.params.id, function (err, link) {
     if (err) { return handleError(res, err); }
     if(!link) { return res.status(404).send('Not Found'); }
     var updated = _.merge(link, req.body);
@@ -60,7 +60,7 @@ exports.update = function(req, res) {
 
 // Deletes a thing from the DB.
 exports.destroy = function(req, res) {
-  Link.findById(req.params.id, function (err, link) {
+  Contacts.findById(req.params.id, function (err, link) {
     if(err) { return handleError(res, err); }
     if(!link) { return res.status(404).send('Not Found'); }
     link.remove(function(err) {

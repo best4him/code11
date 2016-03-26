@@ -4,21 +4,21 @@
 
 'use strict';
 
-var thing = require('./templates.model.js');
+var link = require('./contacts.model.js');
 
 exports.register = function(socket) {
-  thing.schema.post('save', function (doc) {
+  link.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  thing.schema.post('remove', function (doc) {
+  link.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('thing:save', doc);
+  socket.emit('contacts:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('thing:remove', doc);
+  socket.emit('contacts:remove', doc);
 }

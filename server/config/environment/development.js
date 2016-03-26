@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/acrawler-dev'
+    uri: 'mongodb://localhost/code11-dev'
   },
 
   seedDB: false

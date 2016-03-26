@@ -1,7 +1,10 @@
-.thing-form {
+.main-container {
     margin: 20px 0;
-}
 
+}
+.side-container {
+  height: 300px
+}
 #banner {
     border-bottom: none;
     margin-top: -20px;
@@ -34,4 +37,11 @@
 }
 .crawling-button {
   margin-top: 15px;
+}
+.custom-button {
+  margin: 0 auto;
+  width: 200px;
+}
+.modal-input {
+  margin: 5px 0 !important;
 }
