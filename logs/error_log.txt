@@ -1,0 +1,4 @@
+Error: Invalid URI "www.semneletimpului.ro"
+Error: Invalid URI "www.gandul.info"
+Error: Invalid protocol: htttp:
+Error: connect ETIMEDOUT 54.200.75.96:80

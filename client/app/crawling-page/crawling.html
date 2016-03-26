@@ -1,0 +1,28 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div>
+    <div class="text-center">
+      <span>Duration:</span><br>
+      <timer > {{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+    </div>
+    <div class="row">
+      <uib-progressbar  value="progress" type="success"><b>{{progress}}%</b></uib-progressbar>
+    </div>
+    <div class="row">
+      <div class="">
+        <span>Status:</span>
+        <br>
+        <span ng-bind="status"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>ACrawler
+      <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
+      <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+  </div>
+</footer>
