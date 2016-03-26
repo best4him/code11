@@ -9,27 +9,25 @@
 
   /* @ngInject */
   function ControllerName($scope, $http, socket, Auth, $uibModal) {
-
-
     activate();
     $scope.contacts = [];
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
     $scope.openModalAddNewContact = openModalAddNewContact;
+    $scope.openModalEditContact = openModalEditContact;
+    $scope.openModalAdvanceFilter = openModalAdvanceFilter;
+
     $scope.selectContact = function (contact) {
       $scope.selectedContact = contact;
     };
 
-    $http.get('/api/contacts').success(function(contacts) {
-      $scope.contacts = contacts;
-      socket.syncUpdates('contacts', $scope.contacts);
-    });
 
     $scope.addNewContact = addNewContact;
 
 
-    $scope.deleteLink = function(link) {
-      $http.delete('/api/contacts/' + link._id);
+    $scope.deleteContact = function(contact) {
+      $http.delete('/api/contacts/' + contact._id);
+      $scope.selectedContact = undefined;
     };
 
     $scope.$on('$destroy', function () {
@@ -50,6 +48,27 @@
         controller: 'NewContactController',
         resolve: {
           selectedContact: function () {
+            return undefined;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (contact) {
+          addNewContact(contact);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+
+    }
+
+    function openModalEditContact() {
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'app/main/modals/new.contact.html',
+        controller: 'NewContactController',
+        resolve: {
+          selectedContact: function () {
             return $scope.selectedContact;
           }
         }
@@ -61,8 +80,6 @@
         } else {
           addNewContact(contact);
         }
-
-
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -91,10 +108,29 @@
       return true;
     }
 
+    function openModalAdvanceFilter() {
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'app/main/modals/advance.filter.html',
+        controller: 'AdvanceFilterController'
+      });
+
+      modalInstance.result.then(function (filter) {
+
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+
+    }
+
       ////////////////
 
     function activate() {
-
+      $http.get('/api/contacts').success(function(contacts) {
+        $scope.contacts = contacts;
+        socket.syncUpdates('contacts', $scope.contacts);
+      });
     }
   }
 

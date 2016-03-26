@@ -5,13 +5,13 @@
     <div class="row main-container">
       <div class="col-md-6" style="border-right: solid #dddddd 3px;">
         <div class="side-container">
-          <input type="text" class="form-control" placeholder="filter..." ng-model="contactQuery" id="search">
-          <span class="pull-right"><a href="#">Advanced Filter</a></span>
-          <div ng-repeat="(k,v) in sortedcontacts">
+          <input type="text" class="form-control" placeholder="filter..." ng-model="query" id="search">
+          <span class="pull-right"><a href="#" ng-click="openModalAdvanceFilter()">Advanced Filter</a></span>
+          <div ng-repeat="(k,v) in sortedcontacts ">
             <span>{{k}}</span>
             <ul>
-              <li ng-repeat="item in v">
-                <a href="#" ng-click="selectContact(item)">{{item.firstName}} {{item.lastName}}</a>
+              <li ng-repeat="item in v | filter:query">
+                <a href="#" ng-click="selectContact(item)">{{item.firstName}} {{item.lastName | uppercase}}</a>
               </li>
             </ul>
           </div>
@@ -28,11 +28,14 @@
         </div>
         <div class="row">
           <div class="col-md-6 text-center">
-            <button class="btn btn-primary custom-button" ui-sref="crawling">Edit Contact</button>
+            <button class="btn btn-primary custom-button"
+                    ng-click="openModalEditContact()">Edit Contact</button>
           </div>
           <div class="col-md-6 text-center">
-            <button class="btn btn-primary custom-button" ui-sref="crawling">Delete Contact</button>
+            <button class="btn btn-primary custom-button"
+            ng-click="deleteContact(selectedContact)">Delete Contact</button>
           </div>
+
         </div>
 
       </div>

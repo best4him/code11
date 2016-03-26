@@ -6,16 +6,17 @@
 
   angular
     .module('acrawlerApp')
-    .controller('NewContactController', NewContactController);
+    .controller('AdvanceFilterController', AdvanceFilterController);
 
-  NewContactController.$inject = ['$scope', '$uibModalInstance', 'selectedContact'];
+  AdvanceFilterController.$inject = ['$scope', '$uibModalInstance'];
 
   /* @ngInject */
-  function NewContactController($scope, $uibModalInstance, selectedContact) {
+  function AdvanceFilterController($scope, $uibModalInstance) {
+
     $scope.status = {
       isopen: false
     };
-    $scope.newContact = {};
+    $scope.filter = {};
     $scope.items = [
       'friends',
       'family',
@@ -23,19 +24,17 @@
       'others'
     ];
     $scope.selectGroup = function(group) {
-      $scope.newContact.group = group;
+      $scope.filter.group = group;
     };
     activate();
 
     ////////////////
 
     function activate() {
-    if (selectedContact) {
-      $scope.newContact = selectedContact;
-    }
+
     }
     $scope.ok = function () {
-      $uibModalInstance.close($scope.newContact);
+      $uibModalInstance.close($scope.filter);
     };
 
     $scope.cancel = function () {
