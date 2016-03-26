@@ -10,7 +10,7 @@
           <div ng-repeat="(k,v) in sortedcontacts ">
             <span>{{k}}</span>
             <ul>
-              <li ng-repeat="item in v | filter:query">
+              <li ng-repeat="item in v ">
                 <a href="#" ng-click="selectContact(item)">{{item.firstName}} {{item.lastName | uppercase}}</a>
               </li>
             </ul>

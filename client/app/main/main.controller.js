@@ -36,9 +36,16 @@
 
     $scope.$watch('contacts', function(contacts) {
       contacts = _.sortBy(contacts,['firstName', 'lastName']);
-      $scope.sortedcontacts = _.groupBy(contacts, function(item) {return item.firstName[0]; });
+      setSortedcontacts (contacts);
     }, true);
 
+    $scope.$watch('query', function(query) {
+      if(query) {
+        filterContacts ({name: query});
+      } else {
+        setSortedcontacts ($scope.contacts);
+      }
+    });
     function filterContacts (filter) {
       if (filter && filter.name) {
         var pattern = new RegExp(filter.name, 'i');
@@ -48,12 +55,14 @@
 
       var contacts =  _.filter($scope.contacts, function(contact) {
        if((pattern.test(contact.firstName) || pattern.test(contact.lastName)) &&
-         filter.group ? contact.group === filter.group : true) {
+         (filter.group ? contact.group === filter.group : true)) {
         return true;
        }
        return false;
     });
-      console.log(contacts);
+      setSortedcontacts (contacts);
+    }
+    function setSortedcontacts(contacts) {
       $scope.sortedcontacts = _.groupBy(contacts, function(item) {return item.firstName[0]; });
     }
     function openModalAddNewContact() {
