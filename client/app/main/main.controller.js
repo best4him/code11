@@ -16,14 +16,11 @@
     $scope.openModalAddNewContact = openModalAddNewContact;
     $scope.openModalEditContact = openModalEditContact;
     $scope.openModalAdvanceFilter = openModalAdvanceFilter;
+    $scope.addNewContact = addNewContact;
 
     $scope.selectContact = function (contact) {
       $scope.selectedContact = contact;
     };
-
-
-    $scope.addNewContact = addNewContact;
-
 
     $scope.deleteContact = function(contact) {
       $http.delete('/api/contacts/' + contact._id);
@@ -46,13 +43,13 @@
         setSortedcontacts ($scope.contacts);
       }
     });
+
     function filterContacts (filter) {
       if (filter && filter.name) {
         var pattern = new RegExp(filter.name, 'i');
       } else {
         var pattern = /\.*/
       }
-
       var contacts =  _.filter($scope.contacts, function(contact) {
        if((pattern.test(contact.firstName) || pattern.test(contact.lastName)) &&
          (filter.group ? contact.group === filter.group : true)) {
@@ -150,7 +147,6 @@
     }
 
       ////////////////
-
     function activate() {
       $http.get('/api/contacts').success(function(contacts) {
         $scope.contacts = contacts;
